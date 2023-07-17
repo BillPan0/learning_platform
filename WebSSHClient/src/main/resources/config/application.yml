@@ -1,0 +1,51 @@
+server:
+  port: 8080
+spring:
+  mvc:
+    view:
+      prefix: /page/
+      suffix: .html
+  provider:
+    host: 192.168.170.129
+  # kafka连接接地址
+  kafka:
+    bootstrap-servers: ${spring.provider.host}:19093,${spring.provider.host}:19094,${spring.provider.host}:19095
+    send:
+      topic: sendTerminal
+    receive:
+      topic: receiveTerminal
+    # 消费者所属消息组
+    consumer:
+      group-id: terminal-response
+      # 设置自动提交offset
+      enable-auto-commit: true
+      # 自动提交的间隔时间
+      auto-commit-interval: 3000
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+  datasource:
+    url: jdbc:mysql://${spring.provider.host}:3306/learning_platform?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Passw0rd!
+  jackson:
+    time-zone: GMT+8
+
+dubbo:
+  application:
+    name: WebSSHClient
+    qos-enable: true
+    qos-port: 33334
+    qos-accept-foreign-ip: false
+  protocol:
+    name: dubbo
+    host: ${spring.provider.host}
+    port: -1
+  registry:
+    protocol: zookeeper
+    address: ${spring.provider.host}:12181,${spring.provider.host}:12182,${spring.provider.host}:12183
+  scan:
+    base-packages: cn.objectspace.webssh.service.impl
+
+debug: true
