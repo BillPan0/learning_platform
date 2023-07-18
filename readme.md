@@ -49,3 +49,5 @@ LearrningPlatform/CustomizedResource/docker-compose-kafkas.yml
 1）将镜像拷贝至目的主机；
 
 2）数据库表`image_info`下写入镜像信息。
+
+3）数据库表`pdf_to_image_map`下写入镜像与pdf映射关系信息。
