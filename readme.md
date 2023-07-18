@@ -43,3 +43,9 @@ LearrningPlatform/CustomizedResource/docker-compose-kafkas.yml
 `java -jar WebSSHClient-1.0-SNAPSHOT.jar`
 
 `docker compose -f docker-compose-kafkas.yml up -d`
+
+## 镜像导入
+
+1）将镜像拷贝至目的主机；
+
+2）数据库表`image_info`下写入镜像信息。
