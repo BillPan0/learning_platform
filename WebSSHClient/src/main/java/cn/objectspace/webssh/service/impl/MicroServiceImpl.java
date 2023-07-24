@@ -71,15 +71,17 @@ public class MicroServiceImpl implements MicroService {
         int randomPort = arr[TimeFormat.getLocalDateTime().getSecond()];
         //检查同名docker
         String checkExistCmd = "docker ps | grep " + host;
-        //创建docker文件夹
-        String newFolderCmd = "mkdir /home/myapp/webssh/" + host +
-                "&& cp /home/myapp/webssh/clonebase/* /home/myapp/webssh/" + host;
+        //创建docker文件夹并复制文件
+        //所有操作在运行文件夹下进行
+        String imageFolder = imageName.replace(":", "_");
+        String newFolderCmd = "mkdir " + host +
+                "&& cp " + imageFolder + "/* " + host;
         //修改docker compose文件
-        String modifyDockerComposeFileCmd = "sed -i \"s/cloneTest/" + host + "/g\" /home/myapp/webssh/" + host + "/docker-compose.yml" +
-                "&& sed -i \"s/18222/" + randomPort + "/g\" /home/myapp/webssh/" + host + "/docker-compose.yml" +
-                "&& sed -i \"s/clonebase:test/" + imageName + "/g\" /home/myapp/webssh/" + host + "/Dockerfile" +
-                "&& sed -i \"s/clonebase:test/" + imageName + "/g\" /home/myapp/webssh/" + host + "/docker-compose.yml";
-        String startDockerComposeCmd = "cd /home/myapp/webssh/" + host + " && docker compose up -d";
+        //1.替换容器名（原容器名为镜像文件夹名称）
+        //2.替换22端口映射（原端口映射至18222）
+        String modifyDockerComposeFileCmd = "sed -i \"s/" + imageFolder + "/" + host + "/g\" " + host + "/docker-compose.yml" +
+                "&& sed -i 's/- \"[1-9]\\+:22\"/- \"" + randomPort + ":22\"/g' " + host + "/docker-compose.yml";
+        String startDockerComposeCmd = "cd " + host + " && docker compose build && docker compose up -d";
         Process process = null;
         try {
             //检查是否已经存在该名称的容器

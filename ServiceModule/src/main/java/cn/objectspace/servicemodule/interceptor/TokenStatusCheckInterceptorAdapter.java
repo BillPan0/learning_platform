@@ -41,11 +41,13 @@ public class TokenStatusCheckInterceptorAdapter implements HandlerInterceptor {
 
         //登录检查逻辑
         String token = request.getHeader("token");
-        if(userOperateUtil.checkTokenExpired(token))
+        if(userOperateUtil.checkTokenExpired(token)) {
+            request.setAttribute("token", token);
             return true;
+        }
         else{
             log.info("确认执行业务拦截，请求路径：" + requestURI);
-            response.sendRedirect("/api/error");
+            response.sendError(500, "登录过期");
             return false;
         }
     }

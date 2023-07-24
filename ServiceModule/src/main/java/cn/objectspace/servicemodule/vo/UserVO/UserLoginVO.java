@@ -13,4 +13,7 @@ public class UserLoginVO {
 
     @ApiModelProperty(value = "用户登录token")
     String token;
+
+    @ApiModelProperty(value = "用户身份级别")
+    String role;
 }

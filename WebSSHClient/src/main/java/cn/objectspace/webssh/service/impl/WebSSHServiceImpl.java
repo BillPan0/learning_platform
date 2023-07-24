@@ -132,11 +132,12 @@ public class WebSSHServiceImpl implements WebSSHService {
         if (sshConnectInfo != null) {
             sshMap.remove(host);
         }
-        //删除docker终端
-        String deleteTerminalCmd = "cd /home/myapp/webssh/" + host +
+        //删除docker终端并删除空镜像
+        String deleteTerminalCmd = "cd " + host +
                 "&& docker compose down" +
-                "&& cd /home/myapp/webssh/" + host +
-                "&& rm -rf /home/myapp/webssh/" + host;
+                "&& cd " + host +
+                "&& rm -rf " + host +
+                "&& docker rmi $(docker images -f \"dangling=true\" -q)";
         Process process;
         try {
             ProcessBuilder checkProcessBuilder = new ProcessBuilder();

@@ -37,6 +37,17 @@ public class UserOperateUtil {
     }
 
     /**
+     * 获取用户身份级别
+     * @param username 用户名
+     * @return 检查结果
+     */
+    public String getUserRole(String username){
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return userInfoMapper.selectOne(queryWrapper).getRole();
+    }
+
+    /**
      * 检查用户名是否被禁用
      * @param username 用户名
      * @return 检查结果
@@ -227,7 +238,7 @@ public class UserOperateUtil {
     public ResponseResult<OnlineUserInfo> userOnline(int id, String username, String token){
         OnlineUserInfo onlineUserInfo = new OnlineUserInfo();
         //过期时间为15分钟
-        String expireTime = TimeFormat.getLocalDateTimeString(TimeFormat.getLocalDateTime().plusMinutes(15));
+        String expireTime = TimeFormat.getLocalDateTimeString(TimeFormat.getLocalDateTime().plusMinutes(30));
         onlineUserInfo.setUserid(id);
         onlineUserInfo.setUsername(username);
         onlineUserInfo.setToken(token);

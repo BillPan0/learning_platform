@@ -4,6 +4,7 @@ import cn.objectspace.daomodule.utils.PDFOperateUtil;
 import cn.objectspace.servicemodule.service.PDFAccessService;
 import cn.objectspace.servicemodule.vo.PDFVO.GetPDFFileVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,8 @@ public class PDFAccessServiceImpl implements PDFAccessService {
             return ResponseEntity.ok()
                     .body("未找到该文件".getBytes());
         }
-        File file = new File(pdfPath);
+        org.springframework.core.io.Resource resource = new ClassPathResource(pdfPath);
+        File file = resource.getFile();
 
         // 将文件读取到字节数组中
         FileInputStream fileInputStream = new FileInputStream(file);

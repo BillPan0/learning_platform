@@ -40,7 +40,7 @@ public class LoginCheckInterceptorAdapter implements HandlerInterceptor {
         if(token != null)
             return true;
         else{
-            response.sendRedirect("/api/error");
+            response.sendError(500, "未登录");
             return false;
         }
     }

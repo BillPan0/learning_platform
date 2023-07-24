@@ -1,6 +1,7 @@
 package cn.objectspace.webmodule.controller;
 
 import cn.objectspace.commonmodule.utils.ResponseResult;
+import cn.objectspace.daomodule.utils.UserOperateUtil;
 import cn.objectspace.servicemodule.dto.UserLoginDTO;
 import cn.objectspace.servicemodule.dto.UserRegisterDTO;
 import cn.objectspace.servicemodule.service.impl.UserAuthorizedServiceImpl;
@@ -28,8 +29,8 @@ public class AccessControlController {
     @GetMapping("/roles")
     @JsonFormat(pattern = DATE_FORMAT,timezone="GMT+8")
     @ApiOperation("获取用户权限列表")
-    public ResponseResult<UserRolesVO> getUserRolesList(@RequestParam int page, @RequestParam int limit){
-        return accessControlService.getUserRoles(page, limit);
+    public ResponseResult<UserRolesVO> getUserRolesList(@RequestParam int page, @RequestParam int limit, @RequestAttribute String token){
+        return accessControlService.getUserRoles(page, limit, token);
     }
 
     @PostMapping("/add-user")

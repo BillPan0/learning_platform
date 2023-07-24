@@ -47,6 +47,7 @@ public class UserAuthorizedServiceImpl implements UserAuthorizedService {
             userLoginVO.setId(userId);
             userLoginVO.setUsername(username);
             userLoginVO.setToken(token);
+            userLoginVO.setRole(userOperateUtil.getUserRole(username));
             //加入在线用户表
             ResponseResult<OnlineUserInfo> responseResult = userOperateUtil.userOnline(userId, username, token);
             //成功时才返回token数据
