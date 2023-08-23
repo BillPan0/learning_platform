@@ -3,6 +3,9 @@ package cn.objectspace.servicemodule.vo.PDFVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author Bill
+ */
 @Data
 public class GetPDFFileVO {
     @ApiModelProperty(value = "pdf二进制流")

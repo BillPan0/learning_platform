@@ -3,6 +3,9 @@ package cn.objectspace.servicemodule.vo.ExperimentVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author Bill
+ */
 @Data
 public class GetTerminalInfoVO {
     @ApiModelProperty(value = "终端ip信息")

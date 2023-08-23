@@ -1,7 +1,7 @@
 package cn.objectspace.webssh.pojo;
 
 /**
-* @Description: webssh数据传输
+* webssh数据传输
 * @Author: NoCortY
 * @Date: 2020/3/8
 */

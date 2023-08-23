@@ -6,6 +6,15 @@ CommonModule（公共工具模块）、DaoModule（数据持久化模块）、Se
 
 其中WebModule和WebSSHClient包含启动程序入口，其余为依赖模块。
 
+## 运行架构
+
+WebModule通过HTTP方式与前端进行交互。
+
+### 终端分配环节
+前端首先通过HTTP向WebModule发送终端分配请求，WebModule再通过RPC方式调用WebSSHClient的功能函数并获取到返回的终端信息交回给前端；
+### 终端命令模拟环节
+前端通过Websocket同WebModule进行交互，WebModule再将前端需要发送的终端指令通过消息队列kafka发送至WebSSHClient，WebSSHClient通过SSH连接方式将命令发送至终端从而获取执行结果，最终同样将执行结果通过消息队列写回，WebModule从消息队列中得到执行结果后将其返回给前端，完成终端命令模拟业务逻辑。
+
 ## 配置项
 
 WebModule用maven打包后运行于任意主机A，WebSSHClient打包后需运行于提供docker compose服务的Linux主机或虚拟机。

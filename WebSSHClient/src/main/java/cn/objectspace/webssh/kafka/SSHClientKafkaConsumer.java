@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+/**
+ * @author Bill
+ */
 @Component
 @Slf4j
 public class SSHClientKafkaConsumer {
@@ -29,9 +32,9 @@ public class SSHClientKafkaConsumer {
     public void handleMessage(ConsumerRecord<String, String> record){
         log.info("收到发往终端 " + record.key() + " 的指令： " + record.value());
         QueryWrapper<AllocatedTerminalInfo> queryWrapper = new QueryWrapper<>();
-        if(allocatedTerminalMapper.exists(queryWrapper))
-            sshClientCommandManageService.sendTOSSHHost(record.key(), record.value());
-        else {
+        if(allocatedTerminalMapper.exists(queryWrapper)) {
+            sshClientCommandManageService.sendToSSHHost(record.key(), record.value());
+        } else {
             log.info("终端不存在或已关闭");
             sshClientKafkaProducer.sendMessage(record.key(), "终端不存在或已关闭".getBytes());
         }

@@ -4,6 +4,9 @@ import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Bill
+ */
 @Component
 @Slf4j
 public class JSONFormat {

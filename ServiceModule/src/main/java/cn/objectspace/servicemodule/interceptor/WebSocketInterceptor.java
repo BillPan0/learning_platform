@@ -12,14 +12,16 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.logging.Logger;
 
+/**
+ * @author Bill
+ */
 @Component
 @Slf4j
 public class WebSocketInterceptor implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, @NotNull ServerHttpResponse response,
-                                   @NotNull WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+                                   @NotNull WebSocketHandler wsHandler, Map<String, Object> attributes){
         log.info(attributes.toString());
         // 获得请求参数
         Map<String, String> paramMap = HttpUtil.decodeParamMap(request.getURI().getQuery(), StandardCharsets.UTF_8);

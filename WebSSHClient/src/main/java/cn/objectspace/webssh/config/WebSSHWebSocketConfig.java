@@ -9,20 +9,20 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
-* @Description: websocket配置
-* @Author: NoCortY
-* @Date: 2020/3/8
-*/
+ * websocket配置
+ * @Author: Bill
+ * @Date: 2023/8/22
+ */
 @Configuration
 @EnableWebSocket
 public class WebSSHWebSocketConfig implements WebSocketConfigurer{
     @Autowired
-    WebSSHWebSocketHandler webSSHWebSocketHandler;
+    WebSSHWebSocketHandler webSocketHandler;
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
         //socket通道
         //指定处理器和路径
-        webSocketHandlerRegistry.addHandler(webSSHWebSocketHandler, "/webssh")
+        webSocketHandlerRegistry.addHandler(webSocketHandler, "/webssh")
                 .addInterceptors(new WebSocketInterceptor())
                 .setAllowedOrigins("*");
     }

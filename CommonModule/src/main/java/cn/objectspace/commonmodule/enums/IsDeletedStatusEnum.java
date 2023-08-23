@@ -5,6 +5,10 @@ import lombok.Getter;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 
+/**
+ * @author Bill
+ */
+
 @Getter
 public enum IsDeletedStatusEnum {
     NORMAL(0, "未删除/禁用"),

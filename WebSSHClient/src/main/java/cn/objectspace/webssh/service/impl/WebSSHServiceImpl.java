@@ -18,14 +18,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,11 +49,11 @@ public class WebSSHServiceImpl implements WebSSHService {
     String providerHost;
 
     //存放ssh连接信息的map
-    private static Map<String, Object> sshMap = new ConcurrentHashMap<>();
+    private static final Map<String, Object> SSH_MAP = new ConcurrentHashMap<>();
 
-    private Logger logger = LoggerFactory.getLogger(WebSSHServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(WebSSHServiceImpl.class);
     //线程池
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     /**
      * 初始化连接
@@ -65,9 +65,9 @@ public class WebSSHServiceImpl implements WebSSHService {
     public void initConnection(String host) {
         JSch jSch = new JSch();
         SSHConnectInfo sshConnectInfo = new SSHConnectInfo();
-        sshConnectInfo.setjSch(jSch);
+        sshConnectInfo.setJsch(jSch);
         //将这个ssh连接信息放入map中
-        sshMap.put(host, sshConnectInfo);
+        SSH_MAP.put(host, sshConnectInfo);
     }
 
     /**
@@ -78,9 +78,9 @@ public class WebSSHServiceImpl implements WebSSHService {
      * @Date: 2023/07/11
      */
     @Override
-    public void recvHandle(String host, String buffer) {
+    public void revHandle(String host, String buffer) {
         ObjectMapper objectMapper = new ObjectMapper();
-        WebSSHData webSSHData = null;
+        WebSSHData webSSHData;
         try {
             webSSHData = objectMapper.readValue(buffer, WebSSHData.class);
         } catch (IOException e) {
@@ -91,23 +91,20 @@ public class WebSSHServiceImpl implements WebSSHService {
         if (ConstantPool.WEBSSH_OPERATE_CONNECT.equals(webSSHData.getOperate())) {
             initConnection(host);
             //找到刚才存储的ssh连接对象
-            SSHConnectInfo sshConnectInfo = (SSHConnectInfo) sshMap.get(host);
+            SSHConnectInfo sshConnectInfo = (SSHConnectInfo) SSH_MAP.get(host);
             //启动线程异步处理
             WebSSHData finalWebSSHData = webSSHData;
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        connectToSSH(sshConnectInfo, finalWebSSHData);
-                    } catch (JSchException | IOException e) {
-                        logger.error("ssh连接异常");
-                        logger.error("异常信息:{}", e.getMessage());
-                    }
+            executorService.execute(() -> {
+                try {
+                    connectToSSH(sshConnectInfo, finalWebSSHData);
+                } catch (JSchException | IOException e) {
+                    logger.error("ssh连接异常");
+                    logger.error("异常信息:{}", e.getMessage());
                 }
             });
         } else if (ConstantPool.WEBSSH_OPERATE_COMMAND.equals(webSSHData.getOperate())) {
             String command = webSSHData.getCommand();
-            SSHConnectInfo sshConnectInfo = (SSHConnectInfo) sshMap.get(host);
+            SSHConnectInfo sshConnectInfo = (SSHConnectInfo) SSH_MAP.get(host);
             if (sshConnectInfo != null) {
                 try {
                     transToSSH(sshConnectInfo.getChannel(), command);
@@ -121,16 +118,17 @@ public class WebSSHServiceImpl implements WebSSHService {
         }
     }
 
-    @Override
-    public void sendMessage(WebSocketSession session, byte[] buffer) throws IOException {
-        session.sendMessage(new TextMessage(buffer));
-    }
-
+    /**
+     * 关闭对应终端，结束分配
+     * @param host 终端ip
+     * @Author: BillPan
+     * @Date: 2023/08/17
+     */
     @Override
     public void close(String host) {
-        SSHConnectInfo sshConnectInfo = (SSHConnectInfo) sshMap.get(host);
+        SSHConnectInfo sshConnectInfo = (SSHConnectInfo) SSH_MAP.get(host);
         if (sshConnectInfo != null) {
-            sshMap.remove(host);
+            SSH_MAP.remove(host);
         }
         //删除docker终端并删除空镜像
         String deleteTerminalCmd = "cd " + host +
@@ -157,12 +155,12 @@ public class WebSSHServiceImpl implements WebSSHService {
      * @Date: 2023/07/11
      */
     private void connectToSSH(SSHConnectInfo sshConnectInfo, WebSSHData webSSHData) throws JSchException, IOException {
-        Session session = null;
+        Session session;
         String host = webSSHData.getHost();
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
         //获取jsch的会话
-        session = sshConnectInfo.getjSch().getSession(webSSHData.getUsername(), providerHost, webSSHData.getPort());
+        session = sshConnectInfo.getJsch().getSession(webSSHData.getUsername(), providerHost, webSSHData.getPort());
         session.setConfig(config);
         //设置密码
         session.setPassword(webSSHData.getPassword());
@@ -185,7 +183,7 @@ public class WebSSHServiceImpl implements WebSSHService {
         try (InputStream inputStream = channel.getInputStream()) {
             //循环读取
             byte[] buffer = new byte[1024];
-            int i = 0;
+            int i;
             //如果没有数据来，线程会一直阻塞在这个地方等待数据。
             while ((i = inputStream.read(buffer)) != -1) {
                 byte[] response = Arrays.copyOfRange(buffer, 0, i);
@@ -197,8 +195,8 @@ public class WebSSHServiceImpl implements WebSSHService {
             channel.disconnect();
             QueryWrapper<AllocatedTerminalInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("host", host);
-            allocatedTerminalMapper.delete(queryWrapper);
             close(host);
+            allocatedTerminalMapper.delete(queryWrapper);
             log.info("关闭终端" + host + "完成！");
         }
 

@@ -7,24 +7,28 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * @author Bill
+ */
 @Component
 public class SessionManager {
-    private static final ConcurrentMap<String, WebSocketSession> sessionConcurrentMap = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, WebSocketSession> SESSION_CONCURRENT_MAP = new ConcurrentHashMap<>();
 
     public void add(String key, WebSocketSession value) throws IOException {
         //如果已存在则先从库存中清除
-        if(sessionConcurrentMap.get(key) != null)
-            sessionConcurrentMap.get(key).close();
-        sessionConcurrentMap.put(key, value);
+        if(SESSION_CONCURRENT_MAP.get(key) != null) {
+            SESSION_CONCURRENT_MAP.get(key).close();
+        }
+        SESSION_CONCURRENT_MAP.put(key, value);
     }
 
     public WebSocketSession remove(String key){
-        return sessionConcurrentMap.remove(key);
+        return SESSION_CONCURRENT_MAP.remove(key);
     }
 
     public void removeAndClose(String key){
         try {
-            WebSocketSession webSocketSession = sessionConcurrentMap.remove(key);
+            WebSocketSession webSocketSession = SESSION_CONCURRENT_MAP.remove(key);
             if(webSocketSession != null && webSocketSession.isOpen()){
                 webSocketSession.close();
             }
@@ -35,6 +39,6 @@ public class SessionManager {
 
     public WebSocketSession get(String key) {
         // 获得 session
-        return sessionConcurrentMap.get(key);
+        return SESSION_CONCURRENT_MAP.get(key);
     }
 }

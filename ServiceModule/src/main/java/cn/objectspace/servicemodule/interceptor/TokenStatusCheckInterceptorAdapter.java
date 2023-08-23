@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author bali
- * @Date 2023/07/02
+ * @author Bill
+ * @Date: 2023/07/02
  * 登录token状态，第二层业务层拦截器
  * 1.配置到拦截器要拦截哪些请求
  * 2.把这些配置放在容器中
@@ -36,17 +36,16 @@ public class TokenStatusCheckInterceptorAdapter implements HandlerInterceptor {
     @Override
     public boolean preHandle(javax.servlet.http.HttpServletRequest request, @NotNull javax.servlet.http.HttpServletResponse response, @NotNull Object handler) throws Exception {
         //获取进过拦截器的路径
-        String requestURI = request.getRequestURI();
-        log.info("执行业务拦截，请求路径：" + requestURI);
+        String requestUri = request.getRequestURI();
+        log.info("执行业务拦截，请求路径：" + requestUri);
 
-        //登录检查逻辑
+        //检查登录逻辑Redis版
         String token = request.getHeader("token");
-        if(userOperateUtil.checkTokenExpired(token)) {
-            request.setAttribute("token", token);
+        if(userOperateUtil.checkTokenExpiredRedis(token)) {
             return true;
         }
         else{
-            log.info("确认执行业务拦截，请求路径：" + requestURI);
+            log.info("确认执行业务拦截，请求路径：" + requestUri);
             response.sendError(500, "登录过期");
             return false;
         }

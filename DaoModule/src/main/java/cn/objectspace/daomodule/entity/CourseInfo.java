@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Bill
+ */
 @Entity
 @TableName(value = "course_info")
 @Data

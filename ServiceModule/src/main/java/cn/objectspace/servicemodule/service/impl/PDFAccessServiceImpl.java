@@ -2,7 +2,6 @@ package cn.objectspace.servicemodule.service.impl;
 
 import cn.objectspace.daomodule.utils.PDFOperateUtil;
 import cn.objectspace.servicemodule.service.PDFAccessService;
-import cn.objectspace.servicemodule.vo.PDFVO.GetPDFFileVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * @author Bill
+ */
 @Service("pdfAccessService")
 @Slf4j
 public class PDFAccessServiceImpl implements PDFAccessService {
@@ -22,10 +24,10 @@ public class PDFAccessServiceImpl implements PDFAccessService {
     PDFOperateUtil pdfOperateUtil;
 
     @Override
-    public ResponseEntity<byte[]> getPDF(int pdfId) throws IOException{
-        String pdfPath = pdfOperateUtil.getPDFPathById(pdfId);
-        String pdfName = pdfOperateUtil.getPDFNameById(pdfId);
-        if(pdfPath.equals("") || pdfName.equals("")) {
+    public ResponseEntity<byte[]> getPdf(int pdfId) throws IOException{
+        String pdfPath = pdfOperateUtil.getPdfPathById(pdfId);
+        String pdfName = pdfOperateUtil.getPdfNameById(pdfId);
+        if("".equals(pdfPath) || "".equals(pdfName)) {
             return ResponseEntity.ok()
                     .body("未找到该文件".getBytes());
         }

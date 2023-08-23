@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * @author Bill
+ */
 @DubboService
 public class MicroServiceImpl implements MicroService {
     @Resource
@@ -51,10 +54,11 @@ public class MicroServiceImpl implements MicroService {
         terminalInfoDTO.setPassword(imageInfo.getPassword());
         terminalInfoDTO.setImageName(imageName);
         //插入分配记录，插入不成功的情况
-        if(saveAllocatedTerminal(host, terminalInfoDTO) == 0)
+        if(saveAllocatedTerminal(host, terminalInfoDTO) == 0) {
             throw new Exception();
-        else
+        } else {
             return terminalInfoDTO;
+        }
     }
 
     /**
@@ -82,7 +86,7 @@ public class MicroServiceImpl implements MicroService {
         String modifyDockerComposeFileCmd = "sed -i \"s/" + imageFolder + "/" + host + "/g\" " + host + "/docker-compose.yml" +
                 "&& sed -i 's/- \"[1-9]\\+:22\"/- \"" + randomPort + ":22\"/g' " + host + "/docker-compose.yml";
         String startDockerComposeCmd = "cd " + host + " && docker compose build && docker compose up -d";
-        Process process = null;
+        Process process;
         try {
             //检查是否已经存在该名称的容器
             ProcessBuilder checkProcessBuilder = new ProcessBuilder();
@@ -124,7 +128,7 @@ public class MicroServiceImpl implements MicroService {
 
     }
 
-    public int saveAllocatedTerminal(String host, TerminalInfoDTO terminalInfoDTO) throws Exception{
+    public int saveAllocatedTerminal(String host, TerminalInfoDTO terminalInfoDTO){
         AllocatedTerminalInfo allocatedTerminalInfo = new AllocatedTerminalInfo();
         allocatedTerminalInfo.setHost(host);
         allocatedTerminalInfo.setImageName(terminalInfoDTO.getImageName().split(":")[0]);

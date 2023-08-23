@@ -6,19 +6,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * @author Bill
+ */
 @Configuration
 public class CorsConfig {
 
     @Bean
-    public CorsFilter CosFilter(){
+    public CorsFilter cosFilter(){
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
-        long MAX_AGE = 24 * 60 * 60;
-        corsConfiguration.setMaxAge(MAX_AGE);
+        // 缓存有效时间
+        long maxAge = 30 * 60;
+        corsConfiguration.setMaxAge(maxAge);
 
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);

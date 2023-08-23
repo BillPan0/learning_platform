@@ -22,9 +22,9 @@ public class CourseAccessServiceImpl implements CourseAccessService {
     CourseOperateUtil courseOperateUtil;
 
     @Override
-    public ResponseResult<List<GetCoursePDFVO>> getPDFList(int courseId) {
+    public ResponseResult<List<GetCoursePDFVO>> getPdfList(int courseId) {
         try{
-            List<PDFInfo> pdfInfos = courseOperateUtil.getPDFListById(courseId);
+            List<PDFInfo> pdfInfos = courseOperateUtil.getPdfListById(courseId);
             List<GetCoursePDFVO> getCoursePDFVOS = new ArrayList<>();
             for(PDFInfo pdfInfo: pdfInfos){
                 GetCoursePDFVO getCoursePDFVO = new GetCoursePDFVO();
@@ -33,10 +33,10 @@ public class CourseAccessServiceImpl implements CourseAccessService {
                 getCoursePDFVO.setPdfDes(pdfInfo.getPdfDes());
                 getCoursePDFVOS.add(getCoursePDFVO);
             }
-            return new ResponseResult<>(getCoursePDFVOS);
+            return ResponseResult.success(getCoursePDFVOS);
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseResult<>(ResponseStatus.uncompleted_error.getCode(), "数据库操作失败，请重试！");
+            return ResponseResult.fail("数据库操作失败，请重试！");
         }
     }
 
@@ -52,10 +52,10 @@ public class CourseAccessServiceImpl implements CourseAccessService {
                 getCourseListVO.setDes(courseInfo.getCourseDes());
                 getCourseListVOS.add(getCourseListVO);
             }
-            return new ResponseResult<>(getCourseListVOS);
+            return ResponseResult.success(getCourseListVOS);
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseResult<>(ResponseStatus.uncompleted_error.getCode(), "数据库操作失败，请重试！");
+            return ResponseResult.fail("数据库操作失败，请重试！");
         }
     }
 }

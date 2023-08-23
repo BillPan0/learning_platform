@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://192.168.170.129:3306/learning_platform</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="UserStatusDB" uuid="eab86b15-cf5f-4f66-9e74-fb63a340e521">
+      <driver-ref>redis</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>jdbc.RedisDriver</jdbc-driver>
+      <jdbc-url>jdbc:redis://192.168.170.129:6379/0</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

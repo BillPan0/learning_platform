@@ -1,6 +1,9 @@
 package cn.objectspace.webssh.service;
 
+/**
+ * @author Bill
+ */
 public interface SSHClientCommandManageService {
-    void responseTOMessageQueue(String host, String response);
-    void sendTOSSHHost(String host, String command);
+    void responseToMessageQueue(String host, String response);
+    void sendToSSHHost(String host, String command);
 }

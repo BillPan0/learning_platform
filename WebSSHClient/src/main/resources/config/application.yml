@@ -30,7 +30,7 @@ spring:
     username: root
     password: Passw0rd!
   jackson:
-    time-zone: GMT+8
+    time-zone: GMT
 
 dubbo:
   application:
@@ -45,6 +45,9 @@ dubbo:
   registry:
     protocol: zookeeper
     address: ${spring.provider.host}:12181,${spring.provider.host}:12182,${spring.provider.host}:12183
+    timeout: 60000
+    parameters:
+      blockUntilConnectedWait: 60
   scan:
     base-packages: cn.objectspace.webssh.service.impl
 

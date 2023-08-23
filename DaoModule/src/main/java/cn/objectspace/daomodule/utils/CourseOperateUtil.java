@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author Bill
+ */
 @Component
 public class CourseOperateUtil {
     @Resource
@@ -22,7 +25,7 @@ public class CourseOperateUtil {
      * @param courseId 课程id
      * @return pdf类列表
      */
-    public List<PDFInfo> getPDFListById(int courseId){
+    public List<PDFInfo> getPdfListById(int courseId){
         QueryWrapper<PDFInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("course_id", courseId);
         return pdfInfoMapper.selectList(queryWrapper);

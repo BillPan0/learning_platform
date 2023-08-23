@@ -11,6 +11,9 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * @author Bill
+ */
 @Entity
 @TableName(value = "user_info")
 @Data

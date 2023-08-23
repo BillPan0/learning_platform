@@ -1,10 +1,7 @@
 package cn.objectspace.webmodule.controller;
 
 import cn.objectspace.commonmodule.utils.ResponseResult;
-import cn.objectspace.daomodule.utils.UserOperateUtil;
-import cn.objectspace.servicemodule.dto.UserLoginDTO;
 import cn.objectspace.servicemodule.dto.UserRegisterDTO;
-import cn.objectspace.servicemodule.service.impl.UserAuthorizedServiceImpl;
 import cn.objectspace.servicemodule.vo.UserVO.UserDeleteVO;
 import cn.objectspace.servicemodule.vo.UserVO.UserRegisterVO;
 import cn.objectspace.servicemodule.vo.UserVO.UserRolesVO;
@@ -19,6 +16,9 @@ import javax.annotation.Resource;
 
 import static org.hibernate.type.descriptor.java.JdbcDateTypeDescriptor.DATE_FORMAT;
 
+/**
+ * @author Bill
+ */
 @RestController
 @RequestMapping("/role")
 @Api(tags = "权限管理")
@@ -29,7 +29,8 @@ public class AccessControlController {
     @GetMapping("/roles")
     @JsonFormat(pattern = DATE_FORMAT,timezone="GMT+8")
     @ApiOperation("获取用户权限列表")
-    public ResponseResult<UserRolesVO> getUserRolesList(@RequestParam int page, @RequestParam int limit, @RequestAttribute String token){
+    public ResponseResult<UserRolesVO> getUserRolesList(@RequestParam int page, @RequestParam int limit, @RequestHeader String token){
+        //token用来验证用户身份，实现权限控制
         return accessControlService.getUserRoles(page, limit, token);
     }
 

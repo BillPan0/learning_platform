@@ -4,8 +4,9 @@ import cn.objectspace.commonmodule.utils.ResponseResult;
 import cn.objectspace.servicemodule.dto.UserRegisterDTO;
 import cn.objectspace.servicemodule.vo.UserVO.*;
 
-import java.util.List;
-
+/**
+ * @author Bill
+ */
 public interface AccessControlService {
     ResponseResult<UserRolesVO> getUserRoles(int page, int limit, String token);
     ResponseResult<UserRegisterVO> addUser(UserRegisterDTO userRegisterDTO);

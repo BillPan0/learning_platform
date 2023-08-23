@@ -1,13 +1,15 @@
 package cn.objectspace.daomodule.utils;
 
 import cn.objectspace.daomodule.entity.PDFInfo;
-import cn.objectspace.daomodule.entity.UserInfo;
 import cn.objectspace.daomodule.mapper.PDFInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+/**
+ * @author Bill
+ */
 @Component
 public class PDFOperateUtil {
     @Resource
@@ -18,14 +20,15 @@ public class PDFOperateUtil {
      * @param pdfId PDF文件id
      * @return 文件路径
      */
-    public String getPDFPathById(int pdfId){
+    public String getPdfPathById(int pdfId){
         QueryWrapper<PDFInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", pdfId);
         PDFInfo pdfInfo = pdfInfoMapper.selectOne(queryWrapper);
-        if(pdfInfo != null)
+        if(pdfInfo != null) {
             return pdfInfo.getPdfPath();
-        else
+        } else {
             return "";
+        }
     }
 
     /**
@@ -33,13 +36,14 @@ public class PDFOperateUtil {
      * @param pdfId PDF文件id
      * @return 文件名称
      */
-    public String getPDFNameById(int pdfId){
+    public String getPdfNameById(int pdfId){
         QueryWrapper<PDFInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", pdfId);
         PDFInfo pdfInfo = pdfInfoMapper.selectOne(queryWrapper);
-        if(pdfInfo != null)
+        if(pdfInfo != null) {
             return pdfInfo.getPdfName();
-        else
+        } else {
             return "";
+        }
     }
 }

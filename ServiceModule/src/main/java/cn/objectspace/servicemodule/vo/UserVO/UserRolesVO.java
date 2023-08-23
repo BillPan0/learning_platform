@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @author Bill
+ */
 @Data
 public class UserRolesVO {
     List<UserRole> list;
@@ -20,8 +23,9 @@ public class UserRolesVO {
      * @param status 用户状态
      */
     public void addNewUserRole(int id, String username, String role, int status){
-        if(this.list == null)
+        if(this.list == null) {
             this.list = new ArrayList<>();
+        }
         UserRole userRole = new UserRole();
         userRole.setId(id);
         userRole.setUsername(username);

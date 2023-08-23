@@ -9,6 +9,9 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * @author Bill
+ */
 @Entity
 @TableName(value = "pdf_to_image_map")
 @Data

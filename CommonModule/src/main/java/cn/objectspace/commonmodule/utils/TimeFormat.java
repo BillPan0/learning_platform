@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author Bill
+ */
 @Component
 public class TimeFormat {
     static public LocalDateTime getLocalDateTime(){

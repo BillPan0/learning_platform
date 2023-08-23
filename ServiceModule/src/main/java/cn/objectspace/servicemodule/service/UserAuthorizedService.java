@@ -10,9 +10,12 @@ import cn.objectspace.servicemodule.vo.UserVO.UserLogoutVO;
 import cn.objectspace.servicemodule.vo.UserVO.UserPwdChangeVO;
 import cn.objectspace.servicemodule.vo.UserVO.UserRegisterVO;
 
+/**
+ * @author Bill
+ */
 public interface UserAuthorizedService {
-    public ResponseResult<UserLoginVO> userLogin(UserLoginDTO userLoginDTO);
-    public ResponseResult<UserRegisterVO> userRegister(UserRegisterDTO userRegisterDTO);
-    public ResponseResult<UserPwdChangeVO> userPwdChange(UserPwdChangeDTO userPwdChangeDTO);
-    public ResponseResult<UserLogoutVO> userLogout(UserLogoutDTO userLogoutDTO);
+    ResponseResult<UserLoginVO> userLogin(UserLoginDTO userLoginDTO);
+    ResponseResult<UserRegisterVO> userRegister(UserRegisterDTO userRegisterDTO);
+    ResponseResult<UserPwdChangeVO> userPwdChange(UserPwdChangeDTO userPwdChangeDTO);
+    ResponseResult<UserLogoutVO> userLogout(UserLogoutDTO userLogoutDTO);
 }

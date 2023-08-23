@@ -3,6 +3,9 @@ package cn.objectspace.servicemodule.vo.UserVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author Bill
+ */
 @Data
 public class UserLoginVO {
     @ApiModelProperty(value = "用户id")

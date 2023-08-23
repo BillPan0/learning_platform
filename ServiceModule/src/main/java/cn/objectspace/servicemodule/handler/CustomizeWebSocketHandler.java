@@ -13,6 +13,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import javax.annotation.Resource;
 import java.io.IOException;
 
+/**
+ * @author Bill
+ */
 @Component
 @Slf4j
 public class CustomizeWebSocketHandler extends TextWebSocketHandler {
@@ -33,7 +36,7 @@ public class CustomizeWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
         // 获得客户端传来的消息
         String payload = message.getPayload();
         Object host = session.getAttributes().get("host");
@@ -70,8 +73,9 @@ public class CustomizeWebSocketHandler extends TextWebSocketHandler {
                 try {
                     if(new String(response).contains("auto-logout")) {
                         session.close();
-                    }else
+                    }else {
                         session.sendMessage(new TextMessage(response));
+                    }
                 }catch (IOException e){
                     e.printStackTrace();
                     log.error("返回指令应答" + new String(response) + "失败");

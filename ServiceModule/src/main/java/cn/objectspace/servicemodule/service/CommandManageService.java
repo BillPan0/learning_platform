@@ -1,5 +1,8 @@
 package cn.objectspace.servicemodule.service;
 
+/**
+ * @author Bill
+ */
 public interface CommandManageService {
-    void responseTOWebsocket(String host, byte[] response);
+    void responseToWebsocket(String host, byte[] response);
 }

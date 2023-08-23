@@ -20,7 +20,7 @@ public class CommandManageServiceImpl implements CommandManageService {
      * @param response 指令应答
      */
     @Override
-    public void responseTOWebsocket(String host, byte[] response) {
+    public void responseToWebsocket(String host, byte[] response) {
         customizeWebSocketHandler.sendCommandResponseMsg(host, response);
     }
 }

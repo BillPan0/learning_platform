@@ -1,17 +1,17 @@
 package cn.objectspace.daomodule.entity;
 
-import cn.objectspace.commonmodule.enums.IsDeletedStatusEnum;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
+/**
+ * @author Bill
+ */
 @Entity
 @TableName(value = "online_user_info")
 @Data

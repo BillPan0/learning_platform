@@ -1,7 +1,7 @@
 package cn.objectspace.webssh.constant;
 
 /**
-* @Description: 常量池
+* 常量池
 * @Author: NoCortY
 * @Date: 2020/3/8
 */

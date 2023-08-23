@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "spring.kafka.send.topic",
+      "type": "java.lang.String",
+      "description": "命令发送方Kafka的topic."
+    },
+    {
+      "name": "spring.kafka.receive.topic",
+      "type": "java.lang.String",
+      "description": "命令接收方Kafka的topic."
+    }
+  ]
+}

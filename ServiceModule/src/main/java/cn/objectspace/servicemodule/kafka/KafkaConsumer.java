@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+/**
+ * @author Bill
+ */
 @Component
 @Slf4j
 public class KafkaConsumer {
@@ -20,6 +23,6 @@ public class KafkaConsumer {
     @KafkaListener(topics = {"${spring.kafka.receive.topic}"})
     public void handleMessage(ConsumerRecord<String, byte[]> record){
         log.info("收到来自终端 " + record.key() + " 的指令应答");
-        commandManageService.responseTOWebsocket(record.key(), record.value());
+        commandManageService.responseToWebsocket(record.key(), record.value());
     }
 }

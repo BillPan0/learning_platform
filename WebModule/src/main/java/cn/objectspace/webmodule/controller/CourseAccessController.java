@@ -17,6 +17,9 @@ import java.util.List;
 
 import static org.hibernate.type.descriptor.java.JdbcDateTypeDescriptor.DATE_FORMAT;
 
+/**
+ * @author Bill
+ */
 @RestController
 @RequestMapping("/course")
 @Api(tags = "课程信息管理")
@@ -27,8 +30,8 @@ public class CourseAccessController {
     @GetMapping("/pdf")
     @JsonFormat(pattern = DATE_FORMAT,timezone="GMT+8")
     @ApiOperation("获取课程PDF列表")
-    public ResponseResult<List<GetCoursePDFVO>> getPDFList(@RequestParam int courseId){
-        return courseAccessService.getPDFList(courseId);
+    public ResponseResult<List<GetCoursePDFVO>> getPdfList(@RequestParam int courseId){
+        return courseAccessService.getPdfList(courseId);
     }
 
     @GetMapping("/course-info")

@@ -20,6 +20,9 @@ import javax.annotation.Resource;
 
 import static org.hibernate.type.descriptor.java.JdbcDateTypeDescriptor.DATE_FORMAT;
 
+/**
+ * @author Bill
+ */
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户管理")

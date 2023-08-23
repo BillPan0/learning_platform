@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author bali
- * @Date 2023/07/02
+ * @author Bill
+ * @Date:  2023/07/02
  * 登录状态检查
  * 1.配置到拦截器要拦截哪些请求
  * 2.把这些配置放在容器中
@@ -32,14 +32,14 @@ public class LoginCheckInterceptorAdapter implements HandlerInterceptor {
     @Override
     public boolean preHandle(javax.servlet.http.HttpServletRequest request, @NotNull javax.servlet.http.HttpServletResponse response, @NotNull Object handler) throws Exception {
         //获取进过拦截器的路径
-        String requestURI = request.getRequestURI();
-        log.info("执行报文拦截，请求路径：" + requestURI);
+        String requestUri = request.getRequestURI();
+        log.info("执行报文拦截，请求路径：" + requestUri);
 
         //登录检查逻辑
         String token = request.getHeader("token");
-        if(token != null)
+        if(token != null) {
             return true;
-        else{
+        } else{
             response.sendError(500, "未登录");
             return false;
         }

@@ -2,18 +2,19 @@ package cn.objectspace.webmodule.controller;
 
 import cn.objectspace.dubbo.MicroService;
 import cn.objectspace.commonmodule.utils.ResponseResult;
-import cn.objectspace.commonmodule.utils.ResponseStatus;
 import cn.objectspace.dubbo.dubbointerface.dto.TerminalInfoDTO;
 import cn.objectspace.servicemodule.vo.ExperimentVO.GetTerminalInfoVO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import static org.hibernate.type.descriptor.java.JdbcDateTypeDescriptor.DATE_FORMAT;
 
+/**
+ * @author Bill
+ */
 @RestController
 @RequestMapping("/experiment")
 @Api(tags = "终端管理")
@@ -33,10 +34,10 @@ public class ExperimentTerminalController {
             getTerminalInfoVO.setPort(terminalInfoDTO.getPort());
             getTerminalInfoVO.setUser(terminalInfoDTO.getUser());
             getTerminalInfoVO.setPassword(terminalInfoDTO.getPassword());
-            return new ResponseResult<>(getTerminalInfoVO);
+            return ResponseResult.success(getTerminalInfoVO);
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseResult<>(ResponseStatus.uncompleted_error.getCode(), "数据库操作失败，请重试！");
+            return ResponseResult.fail("数据库操作失败，请重试！");
         }
     }
 }

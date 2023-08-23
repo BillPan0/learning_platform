@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * @author Bill
+ */
 @Slf4j
 @Service("sshClientCommandManageService")
 public class SSHClientCommandManageServiceImpl implements SSHClientCommandManageService {
@@ -18,7 +21,7 @@ public class SSHClientCommandManageServiceImpl implements SSHClientCommandManage
      * @param response 指令
      */
     @Override
-    public void responseTOMessageQueue(String host, String response) {
+    public void responseToMessageQueue(String host, String response) {
     }
 
     /**
@@ -27,7 +30,7 @@ public class SSHClientCommandManageServiceImpl implements SSHClientCommandManage
      * @param command 指令应答
      */
     @Override
-    public void sendTOSSHHost(String host, String command) {
-        webSSHService.recvHandle(host, command);
+    public void sendToSSHHost(String host, String command) {
+        webSSHService.revHandle(host, command);
     }
 }

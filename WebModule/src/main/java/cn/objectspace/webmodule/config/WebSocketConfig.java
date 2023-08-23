@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 /**
  * websocket
  * 的配置信息
+ * @author Bill
  */
 @Configuration
 @EnableWebSocket

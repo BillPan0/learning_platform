@@ -3,6 +3,9 @@ package cn.objectspace.servicemodule.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author Bill
+ */
 @Data
 public class UserLoginDTO {
     @ApiModelProperty(value = "登录用户名")

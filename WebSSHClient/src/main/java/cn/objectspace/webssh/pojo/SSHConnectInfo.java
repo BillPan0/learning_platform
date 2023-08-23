@@ -2,23 +2,22 @@ package cn.objectspace.webssh.pojo;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
-import org.springframework.web.socket.WebSocketSession;
 /**
-* @Description: ssh连接信息
-* @Author: NoCortY
-* @Date: 2020/3/8
+* ssh连接信息
+* @Author: Bill
+* @Date: 2023/8/8
 */
 public class SSHConnectInfo {
 
-    private JSch jSch;
+    private JSch jsch;
     private Channel channel;
 
-    public JSch getjSch() {
-        return jSch;
+    public JSch getJsch() {
+        return jsch;
     }
 
-    public void setjSch(JSch jSch) {
-        this.jSch = jSch;
+    public void setJsch(JSch jsch) {
+        this.jsch = jsch;
     }
 
     public Channel getChannel() {

@@ -1,10 +1,12 @@
 package cn.objectspace.servicemodule.service;
 
-import cn.objectspace.servicemodule.vo.PDFVO.GetPDFFileVO;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 
+/**
+ * @author Bill
+ */
 public interface PDFAccessService {
-    public ResponseEntity<byte[]> getPDF(int pdfId) throws IOException;
+    ResponseEntity<byte[]> getPdf(int pdfId) throws IOException;
 }

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+/**
+ * @author Bill
+ */
 @Component
 public class SSHClientKafkaProducer {
     @Resource

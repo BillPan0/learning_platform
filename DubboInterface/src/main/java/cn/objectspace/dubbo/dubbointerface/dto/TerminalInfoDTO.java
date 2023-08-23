@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author Bill
+ */
 @Data
 public class TerminalInfoDTO implements Serializable {
     @ApiModelProperty(value = "终端ip")

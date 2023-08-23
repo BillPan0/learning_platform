@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: cn.objectspace.LearningPlatform
+Main-Class: cn.objectspace.WebSSHClient
 
